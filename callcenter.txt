@@ -1,0 +1,526 @@
+<Call center dataset>
+#### DataSource: Call center dataset ####
+### Description: The Call Center Dataset is the central repository driving our organization's success in both e-commerce and offline commerce operations. It encompasses a comprehensive set of tables, each with a unique purpose. Tables such as 'WEB_SITE,' 'WEB_SALES,' 'WEB_RETURNS,' 'WAREHOUSE,' 'STORE_SALES,' 'STORE_RETURNS,' and 'CATALOG_SALES' capture vital transactional data, enabling us to analyze sales performance, customer behavior, and return patterns. Dimensional tables like 'TIME_DIM' and 'DATE_DIM' provide structured time-related attributes, facilitating advanced temporal analysis. 'CUSTOMER,' 'CUSTOMER_DEMOGRAPHICS,' and 'CUSTOMER_ADDRESS' tables focus on understanding our customer base, enabling targeted marketing and personalized customer experiences. 'ITEM' and 'INVENTORY' tables support effective inventory management, while 'SHIP_MODE' ensures smooth logistics and delivery. Tables like 'REASON,' 'PROMOTION,' 'INCOME_BAND,' 'HOUSEHOLD_DEMOGRAPHICS,' 'CATALOG_RETURNS,' 'CATALOG_PAGE,' and 'CALL_CENTER' enhance our understanding of customer feedback, promotional strategies, income segmentation, and catalog management. ###
+### Tables ###
+Table Name: WEB_SITE
+Table Description: The WEB_SITE table contains detailed information about various e-commerce websites managed by the company. It includes metadata about each site, such as identification numbers, operational dates, classification, management, and physical location details. This table is crucial for analyzing the performance and characteristics of different web properties, understanding market segmentation, and managing tax-related information for online sales.
+Columns:
+WEB_SITE_SK: A surrogate key that uniquely identifies each website record within the table.
+WEB_SITE_ID: A surrogate key that uniquely identifies each website record within the table.
+WEB_REC_START_DATE: The date when the website record was first created or started being tracked in the database.
+WEB_REC_END_DATE: The date when the website record was retired or ceased to be tracked. A 'NULL' value indicates that the website is currently active.
+WEB_NAME: The name of the website as it is known publicly or within the company.
+WEB_OPEN_DATE_SK: A surrogate key that links to a date dimension table, indicating the date when the website was officially launched or opened.
+WEB_CLOSE_DATE_SK: A surrogate key that links to a date dimension table, indicating the date when the website was closed, if applicable. A 'null' value suggests the website is still operational.
+WEB_CLASS: A classification of the website, which could be used to categorize the type of site or its business model.
+WEB_MANAGER: The name of the individual responsible for managing the website.
+WEB_MKT_ID: A numeric identifier representing the market segment or category to which the website is targeted.
+WEB_MKT_CLASS: A textual classification of the market segment, providing a qualitative description of the target market or marketing strategy.
+WEB_MKT_DESC: A detailed description of the market segment or marketing approach for the website.
+WEB_MARKET_MANAGER: The name of the individual responsible for managing the market segment or marketing efforts for the website.
+WEB_COMPANY_ID: A numeric identifier for the company that owns or operates the website.
+WEB_COMPANY_NAME: The name of the company that owns or operates the website.
+WEB_STREET_NUMBER: The street number of the physical location associated with the website, if applicable.
+WEB_STREET_NAME: The street name of the physical location associated with the website.
+WEB_STREET_TYPE: The type of street (e.g., Avenue, Boulevard, Circle) of the physical location associated with the website.
+WEB_SUITE_NUMBER: The suite or unit number of the physical location associated with the website, if applicable.
+WEB_CITY: The city in which the physical location associated with the website is situated.
+WEB_COUNTY: The county in which the physical location associated with the website is situated.
+WEB_STATE: The state or province in which the physical location associated with the website is situated.
+WEB_ZIP: The postal or ZIP code for the physical location associated with the website.
+WEB_COUNTRY: The country in which the physical location associated with the website is situated.
+WEB_GMT_OFFSET: The Greenwich Mean Time (GMT) offset for the physical location of the website, which can be important for time-sensitive operations and reporting.
+WEB_TAX_PERCENTAGE: The tax percentage applicable to sales made through the website, which is essential for financial calculations and compliance.
+
+Table Name: WEB_SALES
+Table Description: The WEB_SALES table captures transactional data for sales made through the company's e-commerce platform. It includes detailed information about each sale, such as the date and time of the sale, shipping details, item information, customer demographics, pricing, discounts, and profit calculations. This table is essential for analyzing online sales performance, customer behavior, and the effectiveness of marketing promotions.
+Columns:
+WS_SOLD_DATE_SK: A surrogate key that links to the date dimension table, representing the date on which the sale was made.
+WS_SOLD_TIME_SK: A surrogate key that links to the time dimension table, indicating the specific time at which the sale occurred.
+WS_SHIP_DATE_SK: A surrogate key that links to the date dimension table, representing the date the item was shipped to the customer.
+WS_ITEM_SK: A surrogate key that links to the item dimension table, identifying the specific item that was sold.
+WS_BILL_CUSTOMER_SK: A surrogate key that links to the customer dimension table, identifying the customer who was billed for the sale.
+WS_BILL_CDEMO_SK: A surrogate key that links to the customer demographics dimension table, providing demographic information about the billed customer.
+WS_BILL_HDEMO_SK: A surrogate key that links to the household demographics dimension table, providing household demographic information for the billed customer.
+WS_BILL_ADDR_SK: A surrogate key that links to the customer address dimension table, indicating the billing address for the sale.
+WS_SHIP_CUSTOMER_SK: A surrogate key that links to the customer dimension table, identifying the customer to whom the item was shipped.
+WS_SHIP_CDEMO_SK: A surrogate key that links to the customer demographics dimension table, providing demographic information about the shipped-to customer.
+WS_SHIP_HDEMO_SK: A surrogate key that links to the household demographics dimension table, providing household demographic information for the shipped-to customer.
+WS_SHIP_ADDR_SK: A surrogate key that links to the customer address dimension table, indicating the shipping address for the sale.
+WS_WEB_PAGE_SK: A surrogate key that links to the web page dimension table, identifying the specific web page through which the sale was made.
+WS_WEB_SITE_SK: A surrogate key that links to the web site dimension table, identifying the specific web site that facilitated the sale.
+WS_SHIP_MODE_SK: A surrogate key that links to the ship mode dimension table, detailing the mode of shipping used for the sale.
+WS_WAREHOUSE_SK: A surrogate key that links to the warehouse dimension table, identifying the warehouse from which the item was shipped.
+WS_PROMO_SK: A surrogate key that links to the promotion dimension table, indicating any promotional offer that was applied to the sale.
+WS_ORDER_NUMBER: A unique identifier for the sales order, which can be used to track and reference the sale.
+WS_QUANTITY: The quantity of items sold in the transaction.
+WS_WHOLESALE_COST: The cost of the item to the company, before any retail markup.
+WS_LIST_PRICE: The manufacturer's suggested retail price (MSRP) for the item.
+WS_SALES_PRICE: The actual sales price at which the item was sold to the customer, after any discounts.
+WS_EXT_DISCOUNT_AMT: The total discount amount applied to the sale, calculated by multiplying the discount per item by the quantity sold.
+WS_EXT_SALES_PRICE: The total sales price for the transaction, calculated by multiplying the sales price per item by the quantity sold.
+WS_EXT_WHOLESALE_COST: The total wholesale cost for the transaction, calculated by multiplying the wholesale cost per item by the quantity sold.
+WS_EXT_LIST_PRICE: The total list price for the transaction, calculated by multiplying the list price per item by the quantity sold.
+WS_EXT_TAX: The total tax amount for the transaction.
+WS_COUPON_AMT: The total coupon amount applied to the sale, if any.
+WS_EXT_SHIP_COST: The total shipping cost for the transaction.
+WS_NET_PAID: The net amount paid by the customer for the items, excluding tax and shipping.
+WS_NET_PAID_INC_TAX: The net amount paid by the customer for the items, including tax but excluding shipping.
+WS_NET_PAID_INC_SHIP: The net amount paid by the customer for the items, including shipping but excluding tax.
+WS_NET_PAID_INC_SHIP_TAX: The net amount paid by the customer for the items, including both tax and shipping.
+WS_NET_PROFIT: The net profit for the transaction, calculated as the net amount paid by the customer minus the total wholesale cost, shipping cost, and any discounts.
+
+Table Name: WEB_RETURNS
+Table Description: The WEB_RETURNS table captures details about items that have been returned by customers through the ecommerce platform. It includes information about the return transaction, such as the date and time of the return, the item returned, customer details, financials related to the return, and the reason for the return. This table is crucial for understanding return patterns, customer satisfaction, and the financial impact of returns on the business.
+Columns:
+WR_RETURNED_DATE_SK: A surrogate key that links to the DATE_DIMENSION table, indicating the date on which the item was returned.
+WR_RETURNED_TIME_SK: A surrogate key that links to the TIME_DIMENSION table, representing the time at which the return was processed.
+WR_ITEM_SK: A surrogate key that links to the ITEM table, identifying the specific item that was returned.
+WR_REFUNDED_CUSTOMER_SK: A surrogate key linking to the CUSTOMER table, identifying the customer who received the refund for the returned item.
+WR_REFUNDED_CDEMO_SK: A surrogate key that links to the CUSTOMER_DEMOGRAPHICS table, providing demographic information about the refunded customer.
+WR_REFUNDED_HDEMO_SK: A surrogate key that links to the HOUSEHOLD_DEMOGRAPHICS table, providing household demographic information about the refunded customer.
+WR_REFUNDED_ADDR_SK: A surrogate key that links to the CUSTOMER_ADDRESS table, indicating the address of the refunded customer.
+WR_RETURNING_CUSTOMER_SK: A surrogate key linking to the CUSTOMER table, identifying the customer who is returning the item.
+WR_RETURNING_CDEMO_SK: A surrogate key that links to the CUSTOMER_DEMOGRAPHICS table, providing demographic information about the returning customer.
+WR_RETURNING_HDEMO_SK: A surrogate key that links to the HOUSEHOLD_DEMOGRAPHICS table, providing household demographic information about the returning customer.
+WR_RETURNING_ADDR_SK: A surrogate key that links to the CUSTOMER_ADDRESS table, indicating the address of the returning customer.
+WR_WEB_PAGE_SK: A surrogate key that links to the WEB_PAGE table, identifying the web page through which the return was initiated or processed.
+WR_REASON_SK: A surrogate key that links to the REASON table, providing the reason code for the item return.
+WR_ORDER_NUMBER: The unique identifier of the original order associated with the returned item.
+WR_RETURN_QUANTITY: The quantity of the item that was returned.
+WR_RETURN_AMT: The amount of money refunded to the customer for the returned items, excluding tax.
+WR_RETURN_TAX: The amount of tax refunded to the customer for the returned items.
+WR_RETURN_AMT_INC_TAX: The total amount refunded to the customer for the returned items, including tax.
+WR_FEE: Any fee charged to the customer for the return process, which could include restocking fees or other charges.
+WR_RETURN_SHIP_COST: The cost of shipping incurred for returning the item.
+WR_REFUNDED_CASH: The amount of cash refunded to the customer as part of the return process.
+WR_REVERSED_CHARGE: The amount of the original charge to the customer's credit card or other payment method that was reversed due to the return.
+WR_ACCOUNT_CREDIT: The amount credited to the customer's account, which can be used for future purchases instead of a direct refund.
+WR_NET_LOSS: The net financial loss to the company as a result of the return, taking into account the refunded amount, fees, shipping costs, and any other associated costs.
+
+Table Name: WEB_PAGE
+Table Description: The WEB_PAGE table contains information about various web pages that are part of an e-commerce or offline commerce platform's online presence. This table tracks the characteristics and metadata of web pages, including their creation and access dates, content details, and customer associations. It is a key component in understanding the digital footprint of the business and analyzing customer interactions with the website.
+Columns:
+WP_WEB_PAGE_SK: A surrogate key that uniquely identifies each web page record within the table.
+WP_WEB_PAGE_ID: A unique identifier for the web page, typically in a format that may be used for internal tracking or referencing.
+WP_REC_START_DATE: The date when the web page record became active or was first recorded in the database.
+WP_REC_END_DATE: The date when the web page record was retired or became inactive. A NULL value indicates that the page is currently active.
+WP_CREATION_DATE_SK: A foreign key that references the DATE_DIMENSION table, indicating the date when the web page was created.
+WP_ACCESS_DATE_SK: A foreign key that references the DATE_DIMENSION table, indicating the date when the web page was last accessed.
+WP_AUTOGEN_FLAG: A flag indicating whether the web page was automatically generated ('Y') or manually created ('N').
+WP_CUSTOMER_SK: A foreign key that references the CUSTOMER table, associating the web page with a specific customer, if applicable.
+WP_URL: The URL of the web page, providing a direct link to the page's location on the internet.
+WP_TYPE: The type or category of the web page, such as 'welcome', 'protected', or 'feedback', which helps in classifying the page's purpose.
+WP_CHAR_COUNT: The number of characters on the web page, which can be used to assess the page's content volume.
+WP_LINK_COUNT: The number of hyperlinks present on the web page, which can be indicative of the page's connectivity and potential for user navigation.
+WP_IMAGE_COUNT: The number of images on the web page, which can be used to evaluate the visual content of the page.
+WP_MAX_AD_COUNT: The maximum number of advertisements that can be displayed on the web page, which is relevant for ad placement strategies and revenue considerations.
+
+Table Name: WAREHOUSE
+Table Description: The WAREHOUSE table contains information about the physical locations where goods are stored before they are distributed to stores or directly to customers. It is a critical component of the supply chain management system, providing details on warehouse infrastructure and location, which are essential for inventory management, order fulfillment, and logistics planning.
+Columns:
+W_WAREHOUSE_SK: A unique surrogate key that serves as the primary identifier for each warehouse record.
+W_WAREHOUSE_ID: A unique alphanumeric identifier for the warehouse, used for operational purposes such as tracking and referencing in external systems.
+W_WAREHOUSE_NAME: The name of the warehouse, which may reflect its location, purpose, or any other characteristic important for identification and categorization.
+W_WAREHOUSE_SQ_FT: The total square footage of the warehouse, indicating the size and capacity of the facility for storing goods.
+W_STREET_NUMBER: The street number of the warehouse's address, which, in combination with other address components, helps in pinpointing the exact location.
+W_STREET_NAME: The name of the street where the warehouse is located, an essential part of the address for delivery and logistics.
+W_STREET_TYPE: The type of street (e.g., Avenue, Parkway, Drive) that the warehouse is on, further refining the address for accurate identification.
+W_SUITE_NUMBER: If applicable, the suite or unit number within a larger building or complex where the warehouse is situated.
+W_CITY: The city in which the warehouse is located, a critical geographic identifier for regional distribution strategies.
+W_COUNTY: The county where the warehouse resides, which can be relevant for tax, regulatory, and shipping considerations.
+W_STATE: The state or province where the warehouse is located, an important factor in managing distribution networks across different jurisdictions.
+W_ZIP: The postal code for the warehouse's location, used for mail delivery and often for defining delivery zones and calculating shipping costs.
+W_COUNTRY: The country where the warehouse is located, indicating the national boundaries within which the warehouse operates.
+W_GMT_OFFSET: The offset from Greenwich Mean Time (GMT) for the warehouse's location, which is important for coordinating operations across different time zones.
+
+Table Name: TIME_DIM
+Table Description: The TIME_DIM table is a dimensional table that provides a structured breakdown of time-related attributes. It is designed to support the analysis of time-based data by offering a granular and consistent time dimension across various datasets. This table is particularly useful for reporting and analytics purposes, where time is a critical factor in understanding patterns, trends, and operational performance. Each record in the table represents a unique time instance, with details such as hour, minute, second, and additional time-related categorizations.
+Columns:
+T_TIME_SK: The surrogate key for the time dimension, serving as a unique identifier for each time record within the table. It is an auto-incrementing number that ensures each time instance is distinct and can be referenced efficiently in queries and joins with other tables.
+T_TIME_ID: A textual identifier for the time instance, which may be used as an alternative to the surrogate key. It provides a human-readable reference and could be used for integrating with systems that require a textual time representation.
+T_TIME: The total number of seconds past midnight for the given time instance. This column allows for easy calculations and comparisons of time across different records by representing time as a single numeric value.
+T_HOUR: The hour component of the time instance, represented in a 24-hour format. This column is useful for analyses that require categorization or filtering of data by the hour of the day.
+T_MINUTE: The minute component of the time instance. This column, in conjunction with the hour and second columns, provides a complete breakdown of the time to facilitate minute-level precision in time-based analyses.
+T_SECOND: The second component of the time instance. It complements the hour and minute columns to offer a precise timestamp for each record, enabling second-level granularity in time-based data examination.
+T_AM_PM: Indicates whether the time instance falls within the AM or PM period of the day. This column is particularly useful for businesses that operate or analyze data in a 12-hour clock format and need to distinguish between morning and afternoon/evening times.
+T_SHIFT: A categorical representation of the work shift during which the time instance occurs. Common shift categories might include 'first', 'second', 'third', etc. This column is valuable for workforce management and operational analysis, where shift-based performance is a key metric.
+T_SUB_SHIFT: A more granular categorization of the work shift, often referred to as a 'sub-shift'. Examples might include 'morning', 'afternoon', 'night', etc. This column provides additional context for time-based analysis within specific segments of a work shift.
+T_MEAL_TIME: Indicates whether the time instance is typically associated with a mealtime, such as 'breakfast', 'lunch', or 'dinner'. This column can be used for analyzing consumer behavior patterns, restaurant performance, or any other time-of-day-related activities that correlate with meal times.
+
+Table Name: STORE_SALES
+Table Description: The STORE_SALES table captures transactional data for sales that occur at physical store locations. It includes detailed information about each sale, such as the date and time of the transaction, the items sold, customer details, promotional discounts applied, and financial metrics like cost, price, and profit. This table is essential for analyzing sales performance, customer purchasing behavior, inventory management, and the effectiveness of marketing promotions.
+Columns:
+SS_SOLD_DATE_SK: A surrogate key that references the date on which the sale occurred. It links to the DATE_DIMENSION table for more detailed date information.
+SS_SOLD_TIME_SK: A surrogate key that references the time at which the sale occurred. It links to the TIME_DIMENSION table for more detailed time information.
+SS_ITEM_SK: A surrogate key that identifies the item sold. It links to the ITEM table, which contains detailed information about the product.
+SS_CUSTOMER_SK: A surrogate key that identifies the customer who made the purchase. It links to the CUSTOMER table for detailed customer demographics and behavior data.
+SS_CDEMO_SK: A surrogate key that references the customer's demographic data. It links to the CUSTOMER_DEMOGRAPHICS table for a richer customer profile.
+SS_HDEMO_SK: A surrogate key that references the household demographics of the customer. It links to the HOUSEHOLD_DEMOGRAPHICS table for additional insights into the customer's household.
+SS_ADDR_SK: A surrogate key that references the address of the store where the sale occurred. It links to the STORE table, which includes location and other store attributes.
+SS_STORE_SK: A surrogate key that identifies the store where the sale took place. It links to the STORE table for detailed store information.
+SS_PROMO_SK: A surrogate key that identifies any promotion applied to the sale. It links to the PROMOTION table, which details the promotion type, duration, and discount offered.
+SS_TICKET_NUMBER: A unique identifier for the sales transaction. This number can be used to track individual sales and is critical for auditing and sales validation.
+SS_QUANTITY: The quantity of items sold in the transaction. This is important for inventory management and sales volume analysis.
+SS_WHOLESALE_COST: The cost of the item to the store, before any retail markup. This is used to calculate the gross margin and profitability of the sale.
+SS_LIST_PRICE: The manufacturer's suggested retail price (MSRP) for the item. This provides a reference point for the discounting and pricing strategy.
+SS_SALES_PRICE: The actual price at which the item was sold, after any discounts. This is the revenue generated from the item sale.
+SS_EXT_DISCOUNT_AMT: The total discount amount applied to the sale. This reflects the impact of promotions or negotiations on the final sale price.
+SS_EXT_SALES_PRICE: The total sales price for the transaction, after applying discounts to the quantity of items sold. This is the net revenue before taxes and coupons.
+SS_EXT_WHOLESALE_COST: The total wholesale cost for the quantity of items sold. This helps in understanding the bulk purchase cost and its relation to sales revenue.
+SS_EXT_LIST_PRICE: The total list price for the quantity of items sold. This can be used to compare the actual sales price against the potential revenue if sold at MSRP.
+SS_EXT_TAX: The total tax amount for the transaction. This is necessary for financial reporting and compliance with tax regulations.
+SS_COUPON_AMT: The total amount of coupon discounts applied to the sale. This reflects the use of coupons in reducing the final price paid by the customer.
+SS_NET_PAID: The total amount paid by the customer, excluding taxes. This is the actual revenue collected from the sale.
+SS_NET_PAID_INC_TAX: The total amount paid by the customer, including taxes. This represents the final amount collected at the point of sale.
+SS_NET_PROFIT: The net profit from the transaction, calculated as the net sales price minus the wholesale cost. This is a key indicator of the profitability of the sale.
+
+Table Name: STORE_RETURNS
+Table Description: The STORE_RETURNS table captures detailed information about products that have been returned to the store. It includes data on when and why items were returned, which items were returned, the customers involved, and the financial impact of the returns. This table is crucial for analyzing return patterns, customer satisfaction, and the financial health related to returns.
+Columns:
+SR_RETURNED_DATE_SK: A surrogate key that links to the DATE_DIMENSION table, representing the date on which the item was returned.
+SR_RETURN_TIME_SK: A surrogate key that links to the TIME_DIMENSION table, indicating the specific time at which the return was processed.
+SR_ITEM_SK: A surrogate key that links to the ITEM table, identifying the specific item that was returned.
+SR_CUSTOMER_SK: A surrogate key that links to the CUSTOMER table, identifying the customer who returned the item.
+SR_CDEMO_SK: A surrogate key that links to the CUSTOMER_DEMOGRAPHICS table, providing demographic information about the customer.
+SR_HDEMO_SK: A surrogate key that links to the HOUSEHOLD_DEMOGRAPHICS table, providing demographic information about the customer's household.
+SR_ADDR_SK: A surrogate key that links to the CUSTOMER_ADDRESS table, indicating the address associated with the return.
+SR_STORE_SK: A surrogate key that links to the STORE table, identifying the store where the return was made.
+SR_REASON_SK: A surrogate key that links to the RETURN_REASON table, providing the reason for the item's return.
+SR_TICKET_NUMBER: A unique identifier for the return transaction, which can be used to track and reference the specific return event.
+SR_RETURN_QUANTITY: The quantity of items returned in the transaction.
+SR_RETURN_AMT: The total amount of money refunded for the returned items, excluding tax.
+SR_RETURN_TAX: The amount of tax refunded as part of the return transaction.
+SR_RETURN_AMT_INC_TAX: The total amount refunded for the returned items, including tax.
+SR_FEE: Any additional fees associated with the return, such as restocking fees.
+SR_RETURN_SHIP_COST: The cost of shipping for the returned items, if applicable.
+SR_REFUNDED_CASH: The amount of cash refunded to the customer as part of the return transaction.
+SR_REVERSED_CHARGE: The amount of the original charge that was reversed on the customer's credit card or other payment method.
+SR_STORE_CREDIT: The amount of store credit given to the customer in lieu of a cash refund.
+SR_NET_LOSS: The net financial loss to the store as a result of the return, taking into account the refunded amount, fees, shipping costs, and any other related expenses.
+
+Table Name: STORE
+Table Description: The STORE table contains detailed information about each physical retail store within the company's portfolio. It includes data on store identification, operational dates, employee count, spatial dimensions, management, and location specifics. This table is crucial for analyzing store performance, managing store-related operations, and understanding the geographical distribution of the company's retail presence.
+Columns:
+S_STORE_SK: A unique surrogate key that serves as the primary identifier for each store within the database.
+S_STORE_ID: A unique alphanumeric identifier for each store, typically used in business operations and reporting.
+S_REC_START_DATE: The date when the store's record was first created in the database, indicating the beginning of its operational data tracking.
+S_REC_END_DATE: The date when the store's record was last updated or marked as inactive in the database, signaling the end of its operational data tracking.
+S_CLOSED_DATE_SK: A foreign key that references the DATE_DIMENSION table, indicating the specific date when the store was closed, if applicable.
+S_STORE_NAME: The official name of the store, which may be used for branding or identification purposes.
+S_NUMBER_EMPLOYEES: The total number of employees working at the store, which is a key metric for workforce management and operational planning.
+S_FLOOR_SPACE: The total floor space of the store in square units, providing insights into the store's size and capacity.
+S_HOURS: The operating hours of the store, indicating the time span within which the store is open for business each day.
+S_MANAGER: The name of the store manager, who is responsible for the day-to-day operations and management of the store.
+S_MARKET_ID: A numeric identifier that links the store to a specific market or region, useful for regional analysis and market segmentation.
+S_GEOGRAPHY_CLASS: A classification of the store's geographical location, which may include urban, suburban, rural, or other descriptors.
+S_MARKET_DESC: A textual description of the market or region in which the store operates, providing context for the store's location and customer base.
+S_MARKET_MANAGER: The name of the manager overseeing the market or region in which the store is located, responsible for multiple stores within that area.
+S_DIVISION_ID: A numeric identifier for the division within the company to which the store belongs, aiding in organizational structure and reporting.
+S_DIVISION_NAME: The name of the division within the company to which the store belongs, providing a layer of organizational context.
+S_COMPANY_ID: A numeric identifier for the company that owns the store, useful in scenarios where the dataset covers multiple corporate entities.
+S_COMPANY_NAME: The name of the company that owns the store, providing clarity in cases where the dataset includes multiple corporate brands.
+S_STREET_NUMBER: The numerical part of the store's street address, which, in combination with other location columns, helps pinpoint the store's physical location.
+S_STREET_NAME: The name of the street on which the store is located, an essential component of the store's full address.
+S_STREET_TYPE: The type of street (e.g., Avenue, Boulevard, Drive) as part of the store's address, providing additional detail for location identification.
+S_SUITE_NUMBER: If the store is located within a larger building or complex, this indicates the suite or unit number.
+S_CITY: The city in which the store is located, a critical piece of geographic information for logistics and marketing strategies.
+S_COUNTY: The county in which the store is located, offering a finer level of geographic detail that can be useful for regional analysis.
+S_STATE: The state or province in which the store is located, important for compliance with regional regulations and tax laws.
+S_ZIP: The postal code for the store's location, which is essential for mail delivery and can also be used in demographic analysis.
+S_COUNTRY: The country in which the store is located, indicating the national market and legal jurisdiction.
+S_GMT_OFFSET: The offset from Greenwich Mean Time (GMT) for the store's location, relevant for coordinating operations across time zones.
+S_TAX_PRECENTAGE: The tax rate applicable to the store's location, which must be considered in financial transactions and reporting.
+
+Table Name: SHIP_MODE
+Table Description: The 'SHIP_MODE' table contains information about the various shipping modes available for orders placed within the commerce ecosystem. This table is crucial for understanding the logistics and delivery options provided to customers, as well as the partnerships and contracts established with different carriers. Each record in the table represents a distinct shipping mode, characterized by its type, code, carrier, and associated contract details. This data is essential for order processing, shipping cost calculation, and delivery time estimation, and it also plays a role in customer satisfaction and operational efficiency.
+Columns:
+SM_SHIP_MODE_SK: This is the surrogate key for the shipping mode, serving as a unique identifier within the table. It is a numeric value that is used internally within the database to ensure referential integrity and to facilitate efficient querying and indexing.
+SM_SHIP_MODE_ID: This is the business key for the shipping mode, which is a unique textual identifier that may be used externally for reference purposes. It follows a standardized format and is designed to be human-readable, allowing for easy identification of the shipping mode in business operations and reporting.
+SM_TYPE: This column specifies the type of shipping mode, such as 'EXPRESS', 'NEXT DAY', or 'OVERNIGHT'. It provides a high-level categorization of the shipping options available, which can be used to communicate delivery expectations to customers and to determine the appropriate shipping strategy for an order.
+SM_CODE: This column contains a code that represents the shipping mode, typically indicating the method of transportation, such as 'AIR'. This code is a concise representation that can be used in various operational contexts, such as labeling, sorting, and system automation.
+SM_CARRIER: This column identifies the carrier company responsible for the transportation of goods under this shipping mode, for example, 'UPS', 'FEDEX', or 'AIRBORNE'. It is essential for tracking which carriers are used for different types of shipping and for managing relationships and performance metrics with these logistics partners.
+SM_CONTRACT: This column holds the contract identifier associated with the shipping mode and carrier. It is a textual representation of the specific agreement in place, which may include negotiated rates, service level agreements, and other terms and conditions. This information is vital for billing, auditing, and contract management purposes.
+
+Table Name: REASON
+Table Description: The 'REASON' table is a crucial component of the call center dataset, which captures the various reasons for customer contacts, complaints, or returns. This table is used to categorize and record the specific reasons why customers may be dissatisfied with their purchase or service experience. It plays a significant role in analyzing customer feedback, identifying product or service issues, and informing business decisions aimed at improving customer satisfaction and operational efficiency.
+Columns:
+R_REASON_SK: This is the surrogate key for the 'REASON' table. It is a unique identifier for each record within the table, serving as the primary key. This column is crucial for maintaining the integrity of the dataset and ensuring that each reason for customer contact is distinctly recorded and can be referenced without ambiguity.
+R_REASON_ID: The 'R_REASON_ID' column stores a textual identifier for each reason. This identifier is designed to be human-readable and may follow a specific encoding or pattern that could be useful for quick identification or categorization purposes. It is a unique code that can be used in conjunction with the surrogate key to cross-reference reasons across different tables or systems within the dataset.
+R_REASON_DESC: This column contains a textual description of the reason for customer contact. The 'R_REASON_DESC' provides a clear and concise explanation of the issue or complaint, such as 'Package was damaged', 'Stopped working', or 'Did not get it on time'. These descriptions are vital for understanding the nature of customer dissatisfaction and are used in reporting and analytics to identify trends, common issues, and areas for improvement.
+
+Table Name: PROMOTION
+Table Description: The PROMOTION table captures details about various promotional campaigns run by the company. It includes information about the promotion itself, such as its name, duration, targeted items, cost, and the marketing channels used. This table is essential for analyzing the effectiveness of different promotional strategies and their impact on sales and customer engagement.
+Columns:
+P_PROMO_SK: A unique surrogate key that serves as the primary identifier for each promotion record.
+P_PROMO_ID: A unique alphanumeric identifier for the promotion, used for reference in external systems or reports.
+P_START_DATE_SK: A foreign key that references the DATE_DIMENSION table, indicating the start date of the promotion.
+P_END_DATE_SK: A foreign key that references the DATE_DIMENSION table, indicating the end date of the promotion.
+P_ITEM_SK: A foreign key that references the ITEM table, identifying the specific item or items targeted by the promotion.
+P_COST: The cost associated with running the promotion, which could include advertising, discounts, or other expenses.
+P_RESPONSE_TARGET: A numeric target for customer responses or engagements that the promotion aims to achieve.
+P_PROMO_NAME: The name of the promotion, which may be used in marketing materials or for internal tracking purposes.
+P_CHANNEL_DMAIL: Indicates whether direct mail was used as a marketing channel for the promotion ('Y' for yes, 'N' for no).
+P_CHANNEL_EMAIL: Indicates whether email was used as a marketing channel for the promotion ('Y' for yes, 'N' for no).
+P_CHANNEL_CATALOG: Indicates whether catalogs were used as a marketing channel for the promotion ('Y' for yes, 'N' for no).
+P_CHANNEL_TV: Indicates whether television advertising was used as a marketing channel for the promotion ('Y' for yes, 'N' for no).
+P_CHANNEL_RADIO: Indicates whether radio was used as a marketing channel for the promotion ('Y' for yes, 'N' for no).
+P_CHANNEL_PRESS: Indicates whether press releases or print media were used as a marketing channel for the promotion ('Y' for yes, 'N' for no).
+P_CHANNEL_EVENT: Indicates whether events were used as a marketing channel for the promotion ('Y' for yes, 'N' for no).
+P_CHANNEL_DEMO: Indicates whether product demonstrations were used as a marketing channel for the promotion ('Y' for yes, 'N' for no).
+P_CHANNEL_DETAILS: Provides additional details about the marketing channels used for the promotion, which could include specific strategies or descriptions of the marketing materials.
+P_PURPOSE: Describes the intended purpose or goal of the promotion, such as increasing brand awareness, driving sales, or launching a new product.
+P_DISCOUNT_ACTIVE: Indicates whether a discount is actively being offered as part of the promotion ('Y' for yes, 'N' for no).
+
+Table Name: ITEM
+Table Description: The ITEM table is a central repository of products available for purchase through the commerce platform. It contains detailed information about each item, including descriptions, pricing, branding, classification, and other attributes that are essential for inventory management, product catalog display, and sales analysis. The table plays a crucial role in the overall dataset by linking to transactions, customer preferences, and supply chain operations.
+Columns:
+I_ITEM_SK: The surrogate key that uniquely identifies an item in the table. It is used as a primary key for quick lookups and to ensure data integrity.
+I_ITEM_ID: The unique identifier for an item, typically used in business operations to track and reference products.
+I_REC_START_DATE: The date when the item record was first created or became active in the system. This is important for understanding product lifecycle and availability.
+I_REC_END_DATE: The date when the item record was deactivated or removed from the system. A NULL value indicates that the item is currently active.
+I_ITEM_DESC: A textual description of the item, providing details that may include its features, benefits, and usage. This is valuable for customer-facing applications and internal product understanding.
+I_CURRENT_PRICE: The retail price at which the item is currently being sold. This is a key figure for sales transactions and profitability analysis.
+I_WHOLESALE_COST: The cost at which the item is acquired from manufacturers or suppliers. This is crucial for calculating margins and understanding the financial aspects of inventory.
+I_BRAND_ID: A numeric identifier for the brand associated with the item. This can be used to join with brand-related tables or datasets.
+I_BRAND: The name of the brand to which the item belongs. Branding is often a significant factor in marketing and customer purchasing decisions.
+I_CLASS_ID: A numeric identifier for the class or type of the item, such as 'baseball' or 'shirts'. This helps in categorizing and organizing inventory.
+I_CLASS: The textual representation of the item's class or type. This is used for filtering and searching within the product catalog.
+I_CATEGORY_ID: A numeric identifier for the category under which the item is listed, such as 'Sports' or 'Men'. Categories are broader groupings that help customers navigate the product selection.
+I_CATEGORY: The name of the category to which the item belongs. Categories are a key part of the shopping experience and influence how products are displayed and promoted.
+I_MANUFACT_ID: A numeric identifier for the manufacturer of the item. This is important for supply chain management and manufacturer relations.
+I_MANUFACT: The name of the manufacturer that produced the item. Manufacturer information can be relevant for quality assurance and brand perception.
+I_SIZE: The size of the item, if applicable. Size is a critical attribute for clothing, accessories, and other items where fit is important.
+I_FORMULATION: A code or description that provides additional details about the item's composition or formulation. This could be relevant for pharmaceuticals, chemicals, or beauty products.
+I_COLOR: The color of the item. Color is an important attribute for many products and can affect customer choice and inventory management.
+I_UNITS: The unit of measure in which the item is sold, such as 'Box', 'Each', or 'Bunch'. This is essential for order processing and inventory tracking.
+I_CONTAINER: The type of packaging or container in which the item is sold. This information is important for logistics, storage, and presentation.
+I_MANAGER_ID: A numeric identifier for the manager responsible for the item. This can be used to track accountability and performance within the sales team.
+I_PRODUCT_NAME: The commercial name of the product as it is known to customers. This is a key element of the product's identity and branding.
+
+Table Name: INVENTORY
+Table Description: The INVENTORY table is a critical component of the Offline Commerce & Ecommerce dataset, providing a snapshot of the stock levels for various items across different warehouses on specific dates. This table is essential for inventory management, tracking the availability of products, and ensuring that supply meets customer demand. It also plays a vital role in analyzing sales trends, forecasting inventory needs, and optimizing stock levels to reduce holding costs and prevent stockouts.
+Columns:
+INV_DATE_SK: This column represents the surrogate key for the date when the inventory quantity was recorded. It is a numeric value that corresponds to a specific date in the DATE dimension table, allowing for the analysis of inventory levels over time. By joining this column with the DATE table, one can gain insights into seasonal trends, restocking patterns, and the impact of promotions or events on inventory levels.
+INV_ITEM_SK: This column contains the surrogate key for the item in question. It is a numeric identifier that links to the ITEM dimension table, providing detailed information about the product, such as its name, category, price, and supplier. This connection enables the analysis of inventory levels in relation to product attributes, helping to identify which items are fast-moving or slow-moving, and informing purchasing and marketing strategies.
+INV_WAREHOUSE_SK: This column holds the surrogate key for the warehouse where the inventory is stored. It is a numeric identifier that references the WAREHOUSE dimension table, which contains details about the warehouse location, capacity, and operational characteristics. This linkage allows for the monitoring and optimization of inventory distribution across different storage facilities, as well as the assessment of regional demand and logistical efficiency.
+INV_QUANTITY_ON_HAND: This column indicates the quantity of the item that is currently available in the warehouse on the specified date. It is a numeric value that reflects the stock level, which is crucial for operational decisions such as restocking, clearance sales, and order fulfillment. The quantity on hand can be used to calculate key performance indicators like inventory turnover rate and to trigger alerts for low stock levels or potential overstock situations.
+
+Table Name: INCOME_BAND
+Table Description: The INCOME_BAND table is a reference table that categorizes income levels into distinct bands or ranges. Each record in this table represents a specific income range, with a lower and upper bound defining the extent of that range. This table is essential for segmenting customers or analyzing data based on income levels, allowing for targeted marketing, customer profiling, and socioeconomic analysis. It can be used to join with other tables that contain income-related information to enrich the dataset with income-based insights.
+Columns:
+IB_INCOME_BAND_SK: This is the surrogate key that uniquely identifies each income band within the table. It is an auto-incremented number that serves as the primary key for the INCOME_BAND table. This surrogate key is used to reference income bands in other tables where income level segmentation is relevant.
+IB_LOWER_BOUND: This column represents the lower boundary of the income band. It is the minimum income value, in dollars, that defines the start of the income range for a particular band. For example, an IB_LOWER_BOUND of 0 indicates that the income band starts from $0, making it the lowest income band in the dataset.
+IB_UPPER_BOUND: This column indicates the upper boundary of the income band. It is the maximum income value, in dollars, that defines the end of the income range for a particular band. For instance, an IB_UPPER_BOUND of 10000 means that the income band encompasses incomes up to $10,000, but not exceeding this amount.
+
+Table Name: HOUSEHOLD_DEMOGRAPHICS
+Table Description: The HOUSEHOLD_DEMOGRAPHICS table contains demographic information about households that interact with the call center. This data is crucial for understanding the customer base, segmenting the market, and tailoring marketing strategies to different demographic groups. The table includes details about the household's income band, buying potential, number of dependents, and vehicle count, which can be used to infer purchasing power and preferences.
+Columns:
+HD_DEMO_SK: This is the unique surrogate key that identifies each household demographic record. It is used to link demographic information to other tables in the dataset, ensuring data integrity and facilitating efficient queries.
+HD_INCOME_BAND_SK: This foreign key references the INCOME_BAND table, which categorizes households into different income bands. It is essential for analyzing the relationship between household income levels and their purchasing behavior or call center interactions.
+HD_BUY_POTENTIAL: This text field estimates the household's buying potential, typically represented as a range. It provides insights into the household's potential spending capacity, which can be used for targeted marketing and sales forecasting.
+HD_DEP_COUNT: This numeric field indicates the number of dependents in the household. It is a critical factor in understanding household responsibilities and can influence purchasing decisions, especially for products and services related to children or dependents.
+HD_VEHICLE_COUNT: This numeric field represents the number of vehicles owned by the household. It can be an indicator of the household's wealth and mobility needs, and it may correlate with the types of products and services they are interested in.
+
+Table Name: DATE_DIM
+Table Description: The DATE_DIM table serves as a dimensional table that provides a comprehensive view of dates, which is essential for time-based analysis in the dataset. It includes a variety of attributes related to dates, such as day of the week, month, quarter, and year, as well as flags for holidays and weekends. This table is typically used to join with fact tables containing date keys, allowing for temporal analysis and reporting over different time granularities.
+Columns:
+D_DATE_SK: A surrogate key that uniquely identifies each date record in the table. It is an auto-incremented number and serves as the primary key for the DATE_DIM table.
+D_DATE_ID: An alternative unique identifier for each date, often in a human-readable or system-specific format.
+D_DATE: The actual date value represented in the table, which includes year, month, and day.
+D_MONTH_SEQ: A sequential integer representing the month's position across the entire dataset, which can be used for sorting or calculating durations between months.
+D_WEEK_SEQ: A sequential integer representing the week's position within the dataset, useful for week-over-week analysis.
+D_QUARTER_SEQ: A sequential integer representing the quarter's position within the dataset, facilitating quarter-over-quarter comparisons.
+D_YEAR: The year component of the date, which is useful for year-over-year analysis and filtering.
+D_DOW: An integer representing the day of the week, where 1 might represent Monday and 7 Sunday, allowing for analysis by day of the week.
+D_MOY: An integer representing the month of the year, useful for monthly analysis and reporting.
+D_DOM: An integer representing the day of the month, which can be used for daily analysis within a given month.
+D_QOY: An integer representing the quarter of the year, which is essential for quarterly performance analysis.
+D_FY_YEAR: The fiscal year associated with the date, which may differ from the calendar year for some businesses.
+D_FY_QUARTER_SEQ: A sequential integer representing the fiscal quarter's position within the fiscal year.
+D_FY_WEEK_SEQ: A sequential integer representing the fiscal week's position within the fiscal year.
+D_DAY_NAME: The name of the day (e.g., Monday, Tuesday), which is useful for human-readable reports and day-of-week analysis.
+D_QUARTER_NAME: A human-readable name for the quarter (e.g., '2023Q1'), which is useful for reporting and analysis.
+D_HOLIDAY: A flag indicating whether the date is a holiday ('Y' for yes, 'N' for no), which is crucial for analyzing holiday sales and traffic.
+D_WEEKEND: A flag indicating whether the date falls on a weekend ('Y' for yes, 'N' for no), important for weekend sales analysis.
+D_FOLLOWING_HOLIDAY: A flag indicating whether the date is the day after a holiday, which can be relevant for understanding post-holiday trends.
+D_FIRST_DOM: The surrogate key (D_DATE_SK) of the first day of the month, which can be used to quickly identify the beginning of a month.
+D_LAST_DOM: The surrogate key (D_DATE_SK) of the last day of the month, which can be used to quickly identify the end of a month.
+D_SAME_DAY_LY: The surrogate key (D_DATE_SK) of the same day in the previous year, facilitating year-over-year date comparisons.
+D_SAME_DAY_LQ: The surrogate key (D_DATE_SK) of the same day in the last quarter, useful for quarter-over-quarter date comparisons.
+D_CURRENT_DAY: A flag indicating if the date is the current day ('Y' for yes, 'N' for no), which can be used for real-time analysis.
+D_CURRENT_WEEK: A flag indicating if the date falls within the current week ('Y' for yes, 'N' for no), useful for current week analysis.
+D_CURRENT_MONTH: A flag indicating if the date falls within the current month ('Y' for yes, 'N' for no), useful for current month analysis.
+D_CURRENT_QUARTER: A flag indicating if the date falls within the current quarter ('Y' for yes, 'N' for no), useful for current quarter analysis.
+D_CURRENT_YEAR: A flag indicating if the date falls within the current year ('Y' for yes, 'N' for no), useful for current year analysis.
+
+Table Name: CUSTOMER_DEMOGRAPHICS
+Table Description: The CUSTOMER_DEMOGRAPHICS table contains detailed demographic information about customers. This data is crucial for understanding customer profiles, which can be used for targeted marketing, customer segmentation, and analyzing purchasing patterns. The demographics data can be linked to customer transactions and behaviors to gain insights into how different demographic groups interact with products and services.
+Columns:
+CD_DEMO_SK: This is the unique surrogate key that identifies each customer demographic record. It serves as the primary key for the table and can be used to join with other tables that reference customer demographics.
+CD_GENDER: Indicates the gender of the customer. Common values include 'M' for male and 'F' for female. This information is useful for gender-based analysis and marketing strategies.
+CD_MARITAL_STATUS: Represents the marital status of the customer, such as 'M' for married and 'S' for single. This can impact purchasing decisions and is valuable for market segmentation.
+CD_EDUCATION_STATUS: Describes the highest level of education attained by the customer, such as 'Primary', 'Secondary', or 'College'. Education level can correlate with income and spending habits, making it a significant factor in customer profiling.
+CD_PURCHASE_ESTIMATE: An estimate of the customer's potential purchasing power, represented as a numeric value. This estimate can help in predicting future sales and understanding the customer's economic status.
+CD_CREDIT_RATING: A classification of the customer's creditworthiness, typically ranging from 'Poor' to 'Excellent'. Credit rating is a key indicator of financial reliability and risk associated with the customer.
+CD_DEP_COUNT: The total number of dependents the customer has. This number includes both children and other dependents, which can influence the customer's spending patterns and needs.
+CD_DEP_EMPLOYED_COUNT: The count of employed dependents within the customer's household. This can affect the household's overall income and financial stability.
+CD_DEP_COLLEGE_COUNT: The number of dependents who are currently attending college. This information is relevant for understanding financial obligations and priorities within the customer's household.
+
+Table Name: CUSTOMER_ADDRESS
+Table Description: The CUSTOMER_ADDRESS table contains detailed information about the addresses of customers. This data is crucial for various business operations such as shipping, billing, and customer segmentation based on geographical location. The table includes unique identifiers for each address, as well as components of the address such as street number, name, type, suite number, city, county, state, zip code, country, and time zone offset. Additionally, the location type provides insights into the living situation of the customer, which can be valuable for marketing and logistics.
+Columns:
+CA_ADDRESS_SK: A surrogate key that uniquely identifies each address record in the table. This is an internal identifier used within the database for efficiently managing and referencing the address records.
+CA_ADDRESS_ID: A unique alphanumeric identifier for each address, which can be used to link customer addresses across different tables and systems.
+CA_STREET_NUMBER: The numerical part of the address, indicating the specific location along a street. For example, '332' in the sample record.
+CA_STREET_NAME: The name of the street on which the address is located. This, combined with the street number, helps in pinpointing the exact location. For instance, 'Lake' from the first sample record.
+CA_STREET_TYPE: The type of street, such as Avenue, Boulevard, Court, or Lane. This helps in further refining the address for delivery purposes. 'Ct.' in the first sample record indicates that the address is on a court.
+CA_SUITE_NUMBER: If applicable, this field contains the suite or apartment number within a larger building or complex. For example, 'Suite 140' in the first sample record indicates a specific unit within a building.
+CA_CITY: The city in which the address is located. This is essential for routing shipments and services to the correct urban area. 'Oak Grove' is the city in the first sample record.
+CA_COUNTY: The county or administrative region where the address is situated. This can be used for regional analysis and tax purposes. For example, 'Colorado County' in the first sample record.
+CA_STATE: The state or province where the address is located, which is crucial for sorting and delivering mail, as well as for regional sales and tax calculations. 'TX' represents Texas in the first sample record.
+CA_ZIP: The postal or ZIP code for the address, which is a key element in mail delivery and geographic segmentation. '78370' is the ZIP code in the first sample record.
+CA_COUNTRY: The country where the address is located, important for international shipping and global customer analysis. 'United States' is listed as the country in all sample records.
+CA_GMT_OFFSET: The Greenwich Mean Time (GMT) offset for the address location, which indicates the time zone difference from GMT. This can be important for scheduling calls or deliveries. All sample records have a GMT offset of -6.
+CA_LOCATION_TYPE: A descriptor of the type of residence, such as 'condo' or 'apartment', which can provide insights into the customer's living situation and potential preferences. Both the first and third sample records indicate 'condo' as the location type.
+
+Table Name: CUSTOMER
+Table Description: The CUSTOMER table is a central component of the Offline Commerce & Ecommerce dataset, which stores detailed information about individual customers. This table is crucial for maintaining customer records, tracking customer interactions, and personalizing customer experiences. It contains demographic information, contact details, and key dates that are essential for customer relationship management, marketing campaigns, and sales analysis.
+Columns:
+C_CUSTOMER_SK: A unique surrogate key that serves as the primary identifier for each customer within the database.
+C_CUSTOMER_ID: A unique alphanumeric identifier assigned to each customer, used for referencing and integrating with external systems.
+C_CURRENT_CDEMO_SK: A foreign key that links to the current demographic snapshot of the customer, allowing for analysis of demographic-related trends and patterns.
+C_CURRENT_HDEMO_SK: A foreign key that references the customer's current household demographics, providing insights into the household composition and enabling targeted marketing.
+C_CURRENT_ADDR_SK: A foreign key that points to the customer's current address record, which is vital for shipping, billing, and regional analysis.
+C_FIRST_SHIPTO_DATE_SK: A surrogate key representing the date of the customer's first shipment, useful for understanding customer lifecycle and retention.
+C_FIRST_SALES_DATE_SK: A surrogate key representing the date of the customer's first purchase, critical for calculating customer lifetime value and acquisition analysis.
+C_SALUTATION: A formal greeting used to address the customer, which can be used for personalizing communication.
+C_FIRST_NAME: The customer's given name, essential for personalization and customer service interactions.
+C_LAST_NAME: The customer's family name, important for identification and record-keeping.
+C_PREFERRED_CUST_FLAG: A flag indicating whether the customer is marked as a preferred customer, which can influence marketing strategies and loyalty programs.
+C_BIRTH_DAY: The day of the month on which the customer was born, used in conjunction with birth month and year for age-related analysis and birthday promotions.
+C_BIRTH_MONTH: The month in which the customer was born, which can be used for seasonal marketing campaigns and demographic segmentation.
+C_BIRTH_YEAR: The year the customer was born, allowing for the calculation of the customer's age and generational marketing efforts.
+C_BIRTH_COUNTRY: The country where the customer was born, providing cultural context and enabling international market segmentation.
+C_LOGIN: The customer's login identifier for online platforms, which can be used to track online behavior and engagement.
+C_EMAIL_ADDRESS: The customer's email address, a critical channel for communication, digital marketing, and customer support.
+C_LAST_REVIEW_DATE: The date of the customer's last review or feedback submission, which can be used to measure customer satisfaction and engagement over time.
+
+Table Name: CATALOG_SALES
+Table Description: The CATALOG_SALES table captures transactional data for sales made through a catalog. This includes details about the sale date and time, shipping information, customer demographics, items purchased, pricing, discounts, taxes, and profits. It is a central table in the dataset, providing insights into customer purchasing behavior, sales effectiveness, and inventory management.
+Columns:
+CS_SOLD_DATE_SK: A surrogate key that links to the date dimension table, indicating the date on which the sale was made.
+CS_SOLD_TIME_SK: A surrogate key that links to the time dimension table, representing the time at which the sale was recorded.
+CS_SHIP_DATE_SK: A surrogate key that links to the date dimension table, indicating the date on which the item was shipped.
+CS_BILL_CUSTOMER_SK: A surrogate key that links to the customer dimension table, identifying the customer who is billed for the sale.
+CS_BILL_CDEMO_SK: A surrogate key that links to the customer demographics dimension table, providing demographic information about the billed customer.
+CS_BILL_HDEMO_SK: A surrogate key that links to the household demographics dimension table, providing household demographic information about the billed customer.
+CS_BILL_ADDR_SK: A surrogate key that links to the customer address dimension table, indicating the billing address for the sale.
+CS_SHIP_CUSTOMER_SK: A surrogate key that links to the customer dimension table, identifying the customer to whom the item is shipped.
+CS_SHIP_CDEMO_SK: A surrogate key that links to the customer demographics dimension table, providing demographic information about the shipped-to customer.
+CS_SHIP_HDEMO_SK: A surrogate key that links to the household demographics dimension table, providing household demographic information about the shipped-to customer.
+CS_SHIP_ADDR_SK: A surrogate key that links to the customer address dimension table, indicating the shipping address for the sale.
+CS_CALL_CENTER_SK: A surrogate key that links to the call center dimension table, identifying the call center that processed the sale.
+CS_CATALOG_PAGE_SK: A surrogate key that links to the catalog page dimension table, indicating the catalog page from which the item was ordered.
+CS_SHIP_MODE_SK: A surrogate key that links to the ship mode dimension table, indicating the mode of shipping used for the sale.
+CS_WAREHOUSE_SK: A surrogate key that links to the warehouse dimension table, identifying the warehouse from which the item was shipped.
+CS_ITEM_SK: A surrogate key that links to the item dimension table, identifying the item that was sold.
+CS_PROMO_SK: A surrogate key that links to the promotion dimension table, identifying any promotion that was applied to the sale.
+CS_ORDER_NUMBER: A unique identifier for the sales order.
+CS_QUANTITY: The quantity of the item that was sold in this transaction.
+CS_WHOLESALE_COST: The wholesale cost of the item sold.
+CS_LIST_PRICE: The manufacturer's suggested retail price (MSRP) of the item sold.
+CS_SALES_PRICE: The actual sales price of the item sold, after applying any discounts or promotions.
+CS_EXT_DISCOUNT_AMT: The total discount amount for the items sold, calculated by multiplying the discount per item by the quantity sold.
+CS_EXT_SALES_PRICE: The total sales price for the items sold, calculated by multiplying the sales price per item by the quantity sold.
+CS_EXT_WHOLESALE_COST: The total wholesale cost for the items sold, calculated by multiplying the wholesale cost per item by the quantity sold.
+CS_EXT_LIST_PRICE: The total list price for the items sold, calculated by multiplying the list price per item by the quantity sold.
+CS_EXT_TAX: The total tax amount for the items sold.
+CS_COUPON_AMT: The total coupon amount applied to the sale.
+CS_EXT_SHIP_COST: The total shipping cost for the items sold.
+CS_NET_PAID: The net amount paid for the items sold, excluding tax, shipping, and any other additional costs.
+CS_NET_PAID_INC_TAX: The net amount paid for the items sold, including tax but excluding shipping and any other additional costs.
+CS_NET_PAID_INC_SHIP: The net amount paid for the items sold, including shipping but excluding tax and any other additional costs.
+CS_NET_PAID_INC_SHIP_TAX: The net amount paid for the items sold, including both shipping and tax.
+CS_NET_PROFIT: The net profit for the items sold, calculated as the net amount paid (including tax and shipping) minus the total wholesale cost and other expenses.
+
+Table Name: CATALOG_RETURNS
+Table Description: The CATALOG_RETURNS table captures details about items that have been returned by customers after purchasing them from the catalog. This table is essential for tracking the return process, including the reasons for returns, the financial impact of returns, and customer information related to the returns. It helps in understanding customer satisfaction and product quality issues, as well as in managing inventory and accounting for losses due to returns.
+Columns:
+CR_RETURNED_DATE_SK: A surrogate key that links to the DATE_DIMENSION table, indicating the date on which the item was returned.
+CR_RETURNED_TIME_SK: A surrogate key that links to the TIME_DIMENSION table, indicating the time at which the item was returned.
+CR_ITEM_SK: A surrogate key that links to the ITEM table, identifying the specific item that was returned.
+CR_REFUNDED_CUSTOMER_SK: A surrogate key that links to the CUSTOMER table, identifying the customer who received the refund for the returned item.
+CR_REFUNDED_CDEMO_SK: A surrogate key that links to the CUSTOMER_DEMOGRAPHICS table, providing demographic information about the refunded customer.
+CR_REFUNDED_HDEMO_SK: A surrogate key that links to the HOUSEHOLD_DEMOGRAPHICS table, providing household demographic information about the refunded customer.
+CR_REFUNDED_ADDR_SK: A surrogate key that links to the CUSTOMER_ADDRESS table, indicating the address of the refunded customer.
+CR_RETURNING_CUSTOMER_SK: A surrogate key that links to the CUSTOMER table, identifying the customer who is returning the item.
+CR_RETURNING_CDEMO_SK: A surrogate key that links to the CUSTOMER_DEMOGRAPHICS table, providing demographic information about the returning customer.
+CR_RETURNING_HDEMO_SK: A surrogate key that links to the HOUSEHOLD_DEMOGRAPHICS table, providing household demographic information about the returning customer.
+CR_RETURNING_ADDR_SK: A surrogate key that links to the CUSTOMER_ADDRESS table, indicating the address of the returning customer.
+CR_CALL_CENTER_SK: A surrogate key that links to the CALL_CENTER table, identifying the call center that handled the return process.
+CR_CATALOG_PAGE_SK: A surrogate key that links to the CATALOG_PAGE table, indicating the catalog page from which the item was originally ordered.
+CR_SHIP_MODE_SK: A surrogate key that links to the SHIP_MODE table, indicating the mode of shipping used for returning the item.
+CR_WAREHOUSE_SK: A surrogate key that links to the WAREHOUSE table, identifying the warehouse where the returned item was received.
+CR_REASON_SK: A surrogate key that links to the REASON table, providing the reason for the item's return.
+CR_ORDER_NUMBER: A unique identifier for the original order from which the returned item was purchased.
+CR_RETURN_QUANTITY: The quantity of the item that was returned.
+CR_RETURN_AMOUNT: The total amount refunded for the returned item, excluding tax.
+CR_RETURN_TAX: The amount of tax refunded for the returned item.
+CR_RETURN_AMT_INC_TAX: The total amount refunded for the returned item, including tax.
+CR_FEE: Any additional fee charged to the customer in relation to the return, such as restocking fees.
+CR_RETURN_SHIP_COST: The cost of shipping incurred for returning the item.
+CR_REFUNDED_CASH: The amount of cash refunded to the customer for the returned item.
+CR_REVERSED_CHARGE: The amount of the original charge that was reversed on the customer's credit card due to the return.
+CR_STORE_CREDIT: The amount of store credit given to the customer instead of a cash refund for the returned item.
+CR_NET_LOSS: The net financial loss to the company as a result of the return, taking into account the refunded amount, fees, shipping costs, and any other related expenses.
+
+Table Name: CATALOG_PAGE
+Table Description: The CATALOG_PAGE table contains information about the pages of various catalogs that are used in the offline commerce and ecommerce sectors. Each record in this table represents a specific page within a catalog, detailing when the page was active, the department it is associated with, catalog identifiers, and a description of the content or theme of the page. This table is essential for understanding the layout and content strategy of catalogs, which are often a key marketing tool for promoting products and services.
+Columns:
+CP_CATALOG_PAGE_SK: This is the surrogate key for the catalog page, serving as a unique identifier for each record within the table. It is used to reference catalog pages internally within the database.
+CP_CATALOG_PAGE_ID: This is the business key for the catalog page, which might be used externally for identifying the page in business processes or in communication with partners or customers.
+CP_START_DATE_SK: This is a foreign key that references the DATE_DIMENSION table. It indicates the start date when the catalog page became active and available for customers.
+CP_END_DATE_SK: This is a foreign key that references the DATE_DIMENSION table. It indicates the end date when the catalog page was retired or replaced by a new page.
+CP_DEPARTMENT: This column specifies the department within the company that is responsible for the catalog page. It helps in categorizing pages by business units or product lines.
+CP_CATALOG_NUMBER: This number identifies the specific catalog in which the page appears. It is useful for tracking which catalog edition a page belongs to.
+CP_CATALOG_PAGE_NUMBER: This number indicates the sequence of the page within the catalog. It is essential for understanding the layout and flow of the catalog's content.
+CP_DESCRIPTION: This text field provides a description of the catalog page's content or theme, offering insights into the marketing strategy and the type of products or services featured on the page.
+CP_TYPE: This column indicates the type of catalog, such as 'bi-annual', 'seasonal', or 'special edition'. It helps in categorizing the catalog pages by their publication frequency or purpose.
+
+Table Name: CALL_CENTER
+Table Description: The CALL_CENTER table contains detailed information about each call center associated with the company. It includes metadata about the call center's operations, physical attributes, management, and market context. This table is crucial for analyzing the performance, coverage, and strategic positioning of call centers within the company's overall customer service infrastructure.
+Columns:
+CC_CALL_CENTER_SK: The surrogate key uniquely identifying each call center record.
+CC_CALL_CENTER_ID: The business identifier for the call center, used in business operations and reporting.
+CC_REC_START_DATE: The date when the call center record became active in the system.
+CC_REC_END_DATE: The date when the call center record was deactivated or superseded by a new record.
+CC_CLOSED_DATE_SK: The surrogate key corresponding to the date the call center was closed, if applicable.
+CC_OPEN_DATE_SK: The surrogate key corresponding to the date the call center was opened.
+CC_NAME: The name of the call center, often reflecting its location or primary service area.
+CC_CLASS: A classification of the call center based on its size or service capacity (e.g., 'small', 'medium', 'large').
+CC_EMPLOYEES: The number of employees working at the call center.
+CC_SQ_FT: The total square footage of the call center's physical space.
+CC_HOURS: The operating hours of the call center, indicating when it is open to handle customer inquiries.
+CC_MANAGER: The name of the individual managing the call center.
+CC_MKT_ID: A numeric identifier linking the call center to a specific market or geographic area.
+CC_MKT_CLASS: A classification of the market in which the call center operates, providing context about its competitive or strategic environment.
+CC_MKT_DESC: A description of the market in which the call center operates, offering insights into local challenges, opportunities, or characteristics.
+CC_MARKET_MANAGER: The name of the manager responsible for overseeing the market in which the call center is located.
+CC_DIVISION: A numeric identifier for the division within the company that the call center belongs to.
+CC_DIVISION_NAME: The name of the division within the company that the call center belongs to.
+CC_COMPANY: A numeric identifier for the company that owns the call center.
+CC_COMPANY_NAME: The name of the company that owns the call center.
+CC_STREET_NUMBER: The street number of the call center's physical address.
+CC_STREET_NAME: The street name of the call center's physical address.
+CC_STREET_TYPE: The type of street (e.g., Avenue, Boulevard, Street) on which the call center is located.
+CC_SUITE_NUMBER: The suite or unit number of the call center's location, if applicable.
+CC_CITY: The city in which the call center is located.
+CC_COUNTY: The county in which the call center is located.
+CC_STATE: The state or province in which the call center is located.
+CC_ZIP: The postal code for the call center's location.
+CC_COUNTRY: The country in which the call center is located.
+CC_GMT_OFFSET: The offset from Greenwich Mean Time (GMT) for the call center's location, affecting its operating hours in relation to global time zones.
+CC_TAX_PERCENTAGE: The tax percentage applicable to the call center's location, which may impact financial and operational considerations.
+
+</Call center dataset>
