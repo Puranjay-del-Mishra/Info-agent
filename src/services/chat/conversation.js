@@ -2,7 +2,7 @@ const mongoDB = require("/Users/puranjaymishra/Documents/petavue/info-agent/src/
 const {ObjectId} = require('mongodb')
 const {storeConv, autoIncrementStepIds, saveMessage, getPrevContext, fetchPrompt, queryEnricher} = require('/Users/puranjaymishra/Documents/petavue/info-agent/src/services/chat/chat.utils.js')
 const OpenAI = require('/Users/puranjaymishra/Documents/petavue/info-agent/src/llms/openai.service.js')
-const getMetaDataInfo = require('/Users/puranjaymishra/Documents/petavue/info-agent/src/llms/metaData.service.js')
+const {getDataSources, getMetaData} = require('/Users/puranjaymishra/Documents/petavue/info-agent/src/llms/metaData.service.js')
 const { start } = require("repl")
 const { message } = require("statuses")
 const startConversation = async (body) => {
@@ -14,16 +14,15 @@ const startConversation = async (body) => {
     // console.log('Check one')
     const prompt = await fetchPrompt("InfoAgent")
     let messages_temp = []
-    const flag0 = []
     if (!body.conversationId) {
         body.conversationId = new ObjectId()
         body.mid = 1
+        await storeConv(body)
     } else {
         body.conversationId = new ObjectId(body.conversationId)
         let { prevContext, lastMessageId } = await getPrevContext(body.conversationId)
         body.mid = lastMessageId + 1
         messages_temp = messages_temp.concat(...prevContext)
-        flag0.push(1)
     }
 
     // const messageId = await saveMessage(body)
@@ -34,44 +33,33 @@ const startConversation = async (body) => {
         content: body.query
     })
 
-    body.enrichedQuery = await queryEnricher(messages_temp)
+    const dataSourcesList = await getDataSources(messages_temp)
 
-    messages_temp.pop()
-    messages_temp.push({
-        role: "user",
-        content: body.enrichedQuery
-    })
-
-    body.metaDataInfo = await getMetaDataInfo(messages_temp)
+    const metaDataInfo = await getMetaData(messages_temp, dataSourcesList)
+    // console.log(metaDataInfo)
     
+    metaDataInfo.forEach(element => {
+        if(typeof element.DatasourceDescription === "undefined"){
+            element.Datasource = ""
+        }
+    }); 
+    body.metaDataInfo = metaDataInfo
 
     let messages = [
         {
             role: "system",
-            content: `${prompt.body}\n [Meta] \n${body.metaDataInfo}\n[/Meta]`
+            content: `${prompt.body}\n [Meta] \n${JSON.stringify(body.metaDataInfo)}\n[/Meta]`
         }
     ]
 
+    messages.push(...messages_temp) //adding the previous context from the messages_temp
 
-    if (flag0.length){
-        body.conversationId = new ObjectId(body.conversationId)
-        let { prevContext, lastMessageId } = await getPrevContext(body.conversationId)
-        body.mid = lastMessageId + 1
-        messages= messages.concat(...prevContext)
-    }
-    else{
-        await storeConv(body)
-    }
-
-    messages.push({
-        role: "user",
-        content: body.enrichedQuery
-    })
-
-    // console.log('The messages that were used for the LLM call are-',messages)
+    const printMessage = messages.slice(1)
+    console.log('The messages that were used for the LLM call are-',printMessage)
 
     body.llm_resp = await startLLMConversation(body, messages, prompt.model)
-    
+    console.log('The response is- ', body.llm_resp.message.content)
+
     const messageId = await saveMessage(body)
     body.messageId = messageId
 

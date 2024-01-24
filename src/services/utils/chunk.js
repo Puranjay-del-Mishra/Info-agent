@@ -27,7 +27,7 @@ async function chunkData(inputData) {
             apiKey: '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'
         })
         const messages = []
-        const prompt = 'Your job is to give an indepth summary of the table based on the description and columns given by the user without exceeding the word count of 50'
+        const prompt = 'Compress the following text in such a way that it still retains the clearly recognisable identity of the table but uses strictly less than 50 words. Include all the essential information so that it can be easily identified when searched for, using vector search. Avoid using the column names directly, insert the essence of important columns if required. Also list out the tables it is linked to, concisely, add this list at the end of the summary. Replace the under score from tables names with an empty space.'
         tableObjects.push({
             "tableName": tableName,
             "tableDescription": tableDescription,
@@ -54,25 +54,25 @@ async function chunkData(inputData) {
         const response = await openai.chat.completions.create(payload, options)
         const summary =  response.choices[0]['message'].content
         const columnList = columns.match(/(?<=\n|^)(.*?):/gm).map(id => id.slice(0, -1));
-
-        // const idd = await mongo.insertOne({
-        //     collectionName: "Tables",
-        //     document:{
-        //         tableName: tableName,
-        //         tableDescription: summary,
-        //         columnList: columnList,
-        //         fullInfo: fullInfo
-        //     },
-        //     db: 'InfoAgent'
-        // })
-        console.log(i,'\n')
+        console.log(summary)
+        const idd = await mongo.insertOne({
+            collectionName: "Tables",
+            document:{
+                tableName: tableName,
+                tableDescription: summary,
+                columnList: columnList,
+                fullInfo: fullInfo,
+                Datasource: "Call center data"
+            },
+            db: 'InfoAgent'
+        })
     }
-
+    console.log('Data chunked!')
     return {tableObjects, tables_w_summary};
 }
 
+
 // const {ans, tables_w_summary} = chunkData(text)
-// console.log(tables_w_summary)
 
 
 const saveDatasourceInfo = async(text, datasourceName) =>{
@@ -89,9 +89,7 @@ const saveDatasourceInfo = async(text, datasourceName) =>{
     return id
 }
 
-// const data = `The Call Center Dataset is a clear collection of tables providing key insights for our organization in both online and offline sales scenarios. The dataset includes parts like 'WEB_SALES,' 'WEB_RETURNS', and 'WEB_SITE', recording sales data, return numbers, and specific information on various online sales websites. Useful tables such as 'WAREHOUSE' and 'STORE_SALES' list logistical parts and offline sales data, letting us understand our supply chain and store sales.
-// Important tables like 'CUSTOMER', 'CUSTOMER_DEMOGRAPHICS,' and 'CUSTOMER_ADDRESS' play key roles in recording demographic data. This information helps create detailed customer profiles, smart marketing plans, and tailored customer experiences. Tables like 'ITEM' and 'INVENTORY' are vital for maintaining a good inventory system by following product availability and demand.
-// The 'SHIP_MODE' table helps improve delivery methods. Other tables like 'REASON,' 'PROMOTION,' 'INCOME_BAND,' 'HOUSEHOLD_DEMOGRAPHICS,' and 'CALL_CENTER' provide a different view on customer feedback, promotion success, income groups, and family demographics, which helps decision-making leading to better customer happiness and work efficiency.`
+// const data = `The Call Center data source has E-commerce and physical retail data: web page details, customer profiles, and transactions; warehouse and item inventory; demographic segmentation; promotional campaigns; shipping modes; income bands; catalog and store sales/returns; call center interactions; time and date dimensions.`
 
 // const iddd = saveDatasourceInfo(data, "CallCenterDatasource")
 // console.log(iddd)

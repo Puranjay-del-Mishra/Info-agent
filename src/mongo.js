@@ -82,7 +82,7 @@ const insertPrompt = async(text, toolName)=>{
     }})
     return res
 }
-const d = ``
+// const d = ``
 // const idd = insertPrompt(d, 'DatasourcePicker')
-
+// console.log('Done')
 module.exports = MongoDB

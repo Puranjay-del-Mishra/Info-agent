@@ -57,8 +57,8 @@ const storeConv = async (body) => {
 
 const saveMessage = async (body) => {
     const compressed_resp = await compressResponse(body.llm_resp.message.content, 'ContentCompressor')
-    console.log('\n\n')
-    console.log('The response is- ', body.llm_resp.message.content)
+    // console.log('\n')
+    // console.log('The response is- ', body.llm_resp.message.content)
     // console.log('The compressed response is- ', compressed_resp)
     const messageId = await mongo.insertOne({collectionName:"messages", document: 
     {
@@ -98,7 +98,7 @@ const getPrevContext = async (conversationId) => {
         query: { conversationId: new ObjectId(conversationId) },
         db: 'InfoAgent',
         options: {
-            projection: { mid: 1, enrichedQuery: 1, metaData: 1, llm_respone_compressed: 1},
+            projection: { mid: 1, query: 1, metaData: 1, llm_respone_compressed: 1},
             sort: { _id: 1 }
         }
     })
@@ -113,7 +113,7 @@ const getPrevContext = async (conversationId) => {
         if (message.llm_respone_compressed) {
             prevContext.push({
                 role: "user",
-                content: message.enrichedQuery
+                content: message.query
             })
 
             prevContext.push({
